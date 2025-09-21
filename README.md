@@ -16,7 +16,7 @@ EDR-Freeze operates in user mode, so you don't need to install any additional dr
 
 ## Links
 
-[Using WSASS to dump LSASS](https://www.zerosalarium.com/2025/09/Dumping-LSASS-With-WER-On-Modern-Windows-11.html)
+[EDR-Freeze: A Tool That Puts EDRs And Antivirus Into A Coma State](https://www.zerosalarium.com/2025/09/EDR-Freeze-Puts-EDRs-Antivirus-Into-Coma.html)
 
 [Tool to run process with PPL without driver](https://github.com/TwoSevenOneT/CreateProcessAsPPL)
 
