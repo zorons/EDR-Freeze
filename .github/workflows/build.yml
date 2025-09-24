@@ -13,8 +13,13 @@ jobs:
       - name: Setup MSVC compiler
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Build with cl.exe
-        run: cl /EHsc /O2 EDR-Freeze.cpp /Fe:EDR-Freeze.exe
+      - name: Build all .cpp files and link advapi32
+        run: |
+          dir /b
+          cl /EHsc /O2 *.cpp advapi32.lib /Fe:EDR-Freeze.exe
+
+      - name: List build output
+        run: dir /s /b
 
       - name: Upload artifact (EXE)
         uses: actions/upload-artifact@v4
