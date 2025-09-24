@@ -1,0 +1,29 @@
+name: Build EDR-Freeze (Windows)
+
+on:
+  workflow_dispatch:   # Cho phép bấm nút Run bằng tay
+  push:
+    branches: [ main ] # Tự build khi bạn push code lên nhánh main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Build with MSBuild
+        run: |
+          msbuild EDR-Freeze.sln /p:Configuration=Release /p:Platform=x64
+
+      - name: List build output
+        run: dir /s /b
+
+      - name: Upload artifact (EXE)
+        uses: actions/upload-artifact@v4
+        with:
+          name: EDR-Freeze-exe
+          path: |
+            **\Release\*.exe
+            **\x64\Release\*.exe
