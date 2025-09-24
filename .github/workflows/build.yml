@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup MSVC compiler
         uses: ilammy/msvc-dev-cmd@v1
@@ -17,7 +17,7 @@ jobs:
         run: cl /EHsc /O2 EDR-Freeze.cpp /Fe:EDR-Freeze.exe
 
       - name: Upload artifact (EXE)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: EDR-Freeze-exe
           path: EDR-Freeze.exe
