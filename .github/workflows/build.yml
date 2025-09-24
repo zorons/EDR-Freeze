@@ -6,20 +6,37 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Setup MSVC compiler
+      - name: Setup MSVC compiler (dev cmd)
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Build all .cpp files and link advapi32
+      - name: List repository files (for debug)
         run: |
-          dir /b
-          cl /EHsc /O2 *.cpp advapi32.lib /Fe:EDR-Freeze.exe
+          Get-ChildItem -Recurse -Name | Select-Object -First 200
+        shell: pwsh
 
-      - name: List build output
+      - name: Gather all .cpp paths into sources.txt
+        run: |
+          # tạo danh sách file .cpp (đệ quy) ở dạng full path
+          Get-ChildItem -Recurse -Filter *.cpp | ForEach-Object { $_.FullName } > sources.txt
+          Write-Host "---- sources.txt ----"
+          Get-Content sources.txt
+        shell: pwsh
+
+      - name: Build all .cpp and link advapi32 (use cmd for cl)
+        run: |
+          type sources.txt
+          rem use cl with response file listing all sources
+          cl /EHsc /O2 @sources.txt advapi32.lib /Fe:EDR-Freeze.exe
+        shell: cmd
+
+      - name: Show output files
         run: dir /s /b
+        shell: cmd
 
       - name: Upload artifact (EXE)
         uses: actions/upload-artifact@v4
